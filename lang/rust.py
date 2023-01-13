@@ -46,7 +46,19 @@ class DummyTypeConverter(gen.TypeConverter):
         super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
     def get_type_api(self, module_name):
-        return super().get_type_api(module_name)
+        return ""
+
+    def to_c_call(self, out_var, expr):
+        return ""
+
+    def from_c_call(self, out_var, expr, ownership):
+        return ""
+
+    def check_call(self, in_var):
+        return ""
+
+    def get_type_glue(self, gen, module_name):
+        return ""
 
 class RustGenerator(gen.FABGen):
     default_ptr_converter = RustPtrTypeConverter
