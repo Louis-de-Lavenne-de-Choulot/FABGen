@@ -40,4 +40,25 @@ class RustTypeConverterCommon(gen.TypeConverter):
     def check_call(self, expr):
         return '%s(%s);\n' % (self.check_func, expr)
 
+
+class DummyTypeConverter(gen.TypeConverter):
+    def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+        super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
+
+    def get_type_api(self, module_name):
+        return super().get_type_api(module_name)
+
+class RustGenerator(gen.FABGen):
+    default_ptr_converter = RustPtrTypeConverter
+    default_class_converter = RustClassTypeDefaultConverter
+    default_extern_converter = RustExternTypeConverter
     
+    def __init__(self):
+        super().__init__()
+        self.check_self_type_in_ops = True
+
+    def get_language(self):
+        return "Rust"
+
+    def output_includes(self):
+        pass
